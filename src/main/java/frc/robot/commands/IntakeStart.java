@@ -16,7 +16,7 @@ public class IntakeStart extends Command {
     @Override
     public void initialize() {
         startTime = Timer.getFPGATimestamp();
-        intakeSub.setIntakeSpeed(0.3);
+        intakeSub.setIntakeSpeed(0.25);
     }
 
     @Override

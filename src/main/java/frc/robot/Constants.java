@@ -10,6 +10,11 @@ public class Constants {
         public static final double turnPercentage = 0.5;
     }
 
+    public static final class GeneralReductions {
+        public static final double elevatorPercentage = 0.8;
+        public static final double wristPercentage = 0.8;
+    }
+
     public static final class SwerveModules {
         public static final class PIDConstants {
         /*

@@ -16,7 +16,7 @@ public class IntakeSpit extends Command{
     @Override 
     public void initialize() {
         startTime = Timer.getFPGATimestamp();
-        intakeSub.setIntakeSpeed(-0.4);
+        intakeSub.setIntakeSpeed(-0.3);
     }
 
     @Override

@@ -36,5 +36,11 @@ public class IntakeSubsystem extends SubsystemBase{
         intake.set(speed);
     }
 
+    public void setWristSpeed(double speed) {
+        wrist.set(speed);
+    }
 
+    public double getWristPos() {
+        return wrist.getPosition().getValueAsDouble();
+    }
 }

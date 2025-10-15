@@ -22,7 +22,9 @@ import frc.robot.commands.AprilTagTracker;
 import frc.robot.commands.IntakePos;
 import frc.robot.commands.IntakeSpit;
 import frc.robot.commands.IntakeStart;
+import frc.robot.commands.IntakeWristSpeed;
 import frc.robot.commands.SetElevatorPosition;
+import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -82,20 +84,20 @@ public class RobotContainer {
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        mvController.leftTrigger().whileFalse(drivetrain.applyRequest(() ->
+        /*mvController.leftBumper().whileFalse(drivetrain.applyRequest(() ->
             drive.withVelocityX(-mvController.getLeftY() * MaxSpeed * Constants.MovementReductions.velPercentage) // Drive forward with negative Y (forward)
                 .withVelocityY(-mvController.getLeftX() * MaxSpeed * Constants.MovementReductions.velPercentage) // Drive left with negative X (left)
                 .withRotationalRate(-mvController.getRightX() * MaxAngularRate * Constants.MovementReductions.turnPercentage) // Drive counterclockwise with negative X (left)
         )
         );
 
-        mvController.leftTrigger().whileTrue(
+        mvController.leftBumper().whileTrue(
             drivetrain.applyRequest(() ->
                 robotDrive.withVelocityX(-mvController.getLeftY() * MaxSpeed * Constants.MovementReductions.velPercentage) // Drive forward with negative Y (forward)
                     .withVelocityY(-mvController.getLeftX() * MaxSpeed * Constants.MovementReductions.velPercentage) // Drive left with negative X (left)
                     .withRotationalRate(-mvController.getRightX() * MaxAngularRate * Constants.MovementReductions.turnPercentage) // Drive counterclockwise with negative X (left)
             )
-        );
+        );*/
         /*drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
@@ -117,13 +119,22 @@ public class RobotContainer {
             point.withModuleDirection(new Rotation2d(-mvController.getLeftY(), -mvController.getLeftX()))
         ));*/
 
-        mvController.y().whileTrue(new IntakeStart(intakeSub));
+        /*mvController.y().whileTrue(new IntakeStart(intakeSub));
         mvController.x().whileTrue(new IntakePos(intakeSub, false));
         mvController.b().whileTrue(new IntakePos(intakeSub, true));
         mvController.a().whileTrue(new IntakeSpit(intakeSub));
 
         mvController.povUp().whileTrue(new SetElevatorPosition(elevatorSub,true));
-        mvController.povDown().whileTrue(new SetElevatorPosition(elevatorSub, false));
+        mvController.povDown().whileTrue(new SetElevatorPosition(elevatorSub, false));*/
+
+        mvController.leftTrigger().whileTrue(new SetElevatorSpeed(elevatorSub, -0.075));
+        mvController.rightTrigger().whileTrue(new SetElevatorSpeed(elevatorSub, 0.15));
+
+        mvController.b().whileTrue(new IntakeStart(intakeSub));
+        mvController.y().whileTrue(new IntakeSpit(intakeSub));
+
+        mvController.x().whileTrue(new IntakeWristSpeed(intakeSub, 0.15));
+        mvController.a().whileTrue(new IntakeWristSpeed(intakeSub, -0.075));
 
         // Run SysId routines when holding back/start and X/Y.
         //////// Note that each routine should be run exactly once in a single log. <<<< IMPORTANTE
@@ -172,7 +183,7 @@ public class RobotContainer {
             return drive.withVelocityX(0.0).withVelocityY(0.0).withRotationalRate(rotationOutput);
           } 
           else {
-            elevatorSub.setElevatorSpeed(0.025);
+            elevatorSub.setElevatorSpeed(0.025); //Constante para gravedad
             return drive.withVelocityX(0.0).withVelocityY(0.0).withRotationalRate(0.0);
           }
         });
