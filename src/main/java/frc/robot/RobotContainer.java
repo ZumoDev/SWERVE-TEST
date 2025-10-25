@@ -114,18 +114,18 @@ public class RobotContainer {
         return drivetrain.applyRequest(() -> {
           double tx = LimelightHelpers.getTX("limelight");
           double ty = LimelightHelpers.getTY("limelight");
-          LimelightHelpers.setPipelineIndex("limelight", 1);
+          LimelightHelpers.setPipelineIndex("limelight", 0); //Pipeline 0
           
-          if (LimelightHelpers.getTV("limelight") && LimelightHelpers.getCurrentPipelineIndex("limelight") == 1) {
+          if (LimelightHelpers.getTV("limelight") /*&& LimelightHelpers.getCurrentPipelineIndex("limelight") == 0*/) {
             double rotationOutput = limelightTurnPID.calculate(tx, Constants.LimelightController.limelightXError);
             rotationOutput = Math.max(Math.min(rotationOutput, MaxAngularRate), -MaxAngularRate);
             
             double elevatorOutput = limelightElevatorPID.calculate(Constants.LimelightController.ElevatorController.limelightYError, ty);
             elevatorOutput = Math.max(Math.min(elevatorOutput, 0.175), -0.175);
             
-            /*System.out.println("tx: " + tx + " / rotOutput: " + rotationOutput);
+            System.out.println("tx: " + tx + " / rotOutput: " + rotationOutput);
             System.out.println("ty: " + ty + " / elevatorOutput: " + elevatorOutput);
-            System.out.println("elevatorPos: " + elevatorSub.getElevatorPosition());*/
+            System.out.println("elevatorPos: " + elevatorSub.getElevatorPosition());
             
             if (Math.abs(elevatorOutput) >= 0.01) {
                 if (elevatorSub.getElevatorPosition() <= 0.7 && ty < 1) {
@@ -144,7 +144,7 @@ public class RobotContainer {
             return drive.withVelocityX(0.0).withVelocityY(0.0).withRotationalRate(rotationOutput);
           } 
           else {
-            elevatorSub.setElevatorSpeed(0.025); //Constante para gravedad
+            elevatorSub.setElevatorSpeed(0.02); //Constante para gravedad
             return drive.withVelocityX(0.0).withVelocityY(0.0).withRotationalRate(0.0);
           }
         });

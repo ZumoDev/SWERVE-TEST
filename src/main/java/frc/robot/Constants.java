@@ -44,7 +44,7 @@ public class Constants {
     }
 
     public static final class LimelightController {
-        public static final double limelightkP = 0.15;
+        public static final double limelightkP = 0.1;
         public static final double limelightkI = 0.0;
         public static final double limelightkD = 0.0;
         public static final double limelightXError = 0.0;
